@@ -3,7 +3,12 @@
   import { postDataToDatabase } from "$lib/index.js";
   import { onMount } from "svelte";
 
+  const delay = 3000;
+
   onMount(() => {
+    setTimeout(() => {
+      window.location.href = "http://localhost:5173";
+    }, delay);
     postDataToDatabase(data.key);
   });
 </script>
