@@ -1,6 +1,11 @@
 <script>
   export let data;
   import { postDataToDatabase } from "$lib/index.js";
+  import { onMount } from "svelte";
+
+  onMount(() => {
+    postDataToDatabase(data.key);
+  });
 </script>
 
 <div class="container p-5 m-5">
@@ -8,7 +13,6 @@
   {#if data.checkedIn}
     <h1>이미 체크인 되셨습니다.</h1>
   {:else}
-    <button on:click={() => postDataToDatabase(data.key)}>체크인</button>
     <h1>체크인 되셨습니다.</h1>
   {/if}
   <p>{data.key}</p>
