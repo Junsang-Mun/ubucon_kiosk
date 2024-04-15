@@ -16,7 +16,6 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"jsqr": "^1.4.0",
 		"quagga": "^0.12.1"
 	}
 }

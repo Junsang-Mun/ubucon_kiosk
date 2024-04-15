@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>QR Code Scanner</title>
+	<!-- Include QuaggaJS library -->
+	<script src="https://cdn.jsdelivr.net/npm/quagga/dist/quagga.min.js"></script>
+</head>
+
+<body>
+	<h1>QR Code Scanner</h1>
+	<video id="preview" width="640" height="480"></video>
+	<button id="captureBtn">Capture</button>
+	<canvas id="canvas" style="display: none;"></canvas>
+	<div id="output"></div>
+	<script>
+		// Get access to the webcam
+		navigator.mediaDevices.getUserMedia({ video: true })
+			.then(function (stream) {
+				var video = document.getElementById('preview');
+				video.srcObject = stream;
+				video.play();
+			})
+			.catch(function (err) {
+				console.error('Error accessing webcam:', err);
+			});
+
+		document.getElementById('captureBtn').addEventListener('click', function () {
+			var video = document.getElementById('preview');
+			var canvas = document.getElementById('canvas');
+			var context = canvas.getContext('2d');
+			canvas.width = video.videoWidth;
+			canvas.height = video.videoHeight;
+			context.drawImage(video, 0, 0, canvas.width, canvas.height);
+			var imageData = canvas.toDataURL('image/png');
+			detectQRCode(imageData);
+		});
+
+		function detectQRCode(imageData) {
+			Quagga.decodeSingle({
+				decoder: {
+					readers: ["ean_reader", "ean_8_reader", "code_39_reader", "code_39_vin_reader", "codabar_reader", "upc_reader", "upc_e_reader", "i2of5_reader", "2of5_reader", "code_93_reader"],
+				},
+				locate: true,
+				src: imageData
+			}, function (result) {
+				if (result && result.codeResult) {
+					document.getElementById('output').innerHTML = 'QR Code detected: ' + result.codeResult.code;
+				} else {
+					document.getElementById('output').innerHTML = 'No QR Code detected.';
+				}
+			});
+		}
+	</script>
+</body>
+
+</html>
