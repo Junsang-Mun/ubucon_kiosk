@@ -53,11 +53,9 @@
       },
       function (result) {
         if (result && result.codeResult) {
-          console.log("QR Code detected: ", result.codeResult.code);
           qrCodeValue.set(result.codeResult.code);
-          // Do something with the detected QR code, like emitting an event
+          window.location.href = `http://localhost:5173/${result.codeResult.code}`;
         } else {
-          console.log("No QR Code detected.");
           qrCodeValue.set("No Data Found");
         }
       }
