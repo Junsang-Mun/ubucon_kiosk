@@ -9,8 +9,8 @@
   let intervalId;
   let showModal = false;
 
-  // Create a writable store for qrCodeValue
-  const qrCodeValue = writable("No Data Found");
+  // Create a writable store for barcodeValue
+  const barcodeValue = writable("No Data Found");
 
   onMount(() => {
     // Get access to the webcam
@@ -55,10 +55,10 @@
       },
       function (result) {
         if (result && result.codeResult) {
-          qrCodeValue.set(result.codeResult.code);
+          barcodeValue.set(result.codeResult.code);
           window.location.href = `http://localhost:5173/${result.codeResult.code}`;
         } else {
-          qrCodeValue.set("No Data Found");
+          barcodeValue.set("No Data Found");
         }
       }
     );
@@ -111,7 +111,7 @@
       ></video>
     </div>
     <div class="card p-3 m-5">
-      <h2>QR Code Value: {$qrCodeValue}</h2>
+      <h2>Barcode Value: {$barcodeValue}</h2>
     </div>
   </div>
 {/if}
