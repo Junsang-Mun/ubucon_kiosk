@@ -7,6 +7,7 @@
   let videoWidth = 640;
   let videoHeight = 480;
   let intervalId;
+  let showModal = false;
 
   // Create a writable store for qrCodeValue
   const qrCodeValue = writable("No Data Found");
@@ -20,6 +21,7 @@
       })
       .catch(function (err) {
         console.error("Error accessing webcam:", err);
+        toggleModal();
       });
 
     // Start continuous QR code detection
@@ -61,22 +63,58 @@
       }
     );
   }
+
+  function toggleModal() {
+    showModal = !showModal;
+  }
 </script>
 
-<h1>UbuCon Korea 2024</h1>
-<p>{$qrCodeValue}</p>
-
-<div class="card" style="width: 18rem;">
-  <video id="preview" bind:this={videoElement} autoplay></video>
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">
-      Some quick example text to build on the card title and make up the bulk of
-      the card's content.
-    </p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
+<!-- Modal -->
+{#if showModal}
+  <div class="modal-backdrop show" />
+  <div class="modal" tabindex="-1" role="dialog" style="display:block;">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <strong>
+            Don't have access to camera or no camera found. Check the camera
+            again.
+          </strong>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" on:click={toggleModal}
+            >Ignore</button
+          >
+        </div>
+      </div>
+    </div>
   </div>
-</div>
+{/if}
+
+<!-- Main content -->
+{#if !showModal}
+  <div class="container p-5">
+    <div class="navbar navbar-expand-lg mb-5">
+      <img
+        src="https://2024.ubuntu-kr.org/_astro/logo.B4ivTObo.svg"
+        alt="UbuCon Korea 2024 Logo"
+        style="height:100%; width:100px; object-fit:contain;"
+      />
+      <h1>UbuCon Korea 2024 Check-in Kiosk</h1>
+    </div>
+    <div class="card p-3">
+      <video
+        id="preview"
+        bind:this={videoElement}
+        autoplay
+        style="height: 30em;"
+      ></video>
+    </div>
+    <div class="card p-3 m-5">
+      <h2>QR Code Value: {$qrCodeValue}</h2>
+    </div>
+  </div>
+{/if}
 
 <style>
   /* #preview {
