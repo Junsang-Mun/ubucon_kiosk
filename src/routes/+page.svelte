@@ -1,4 +1,4 @@
-<!-- BARCODE TYPE CODE39 NEEDED, OTHERS WILL NOT ACCEPTED -->
+<!-- BARCODE TYPE CODE128 NEEDED, OTHERS WILL NOT ACCEPTED -->
 
 <script>
   import { writable } from "svelte/store";
@@ -27,7 +27,7 @@
       });
 
     // Start continuous QR code detection
-    intervalId = setInterval(captureAndDetectQRCode, 100); // Adjust the interval as needed
+    intervalId = setInterval(captureAndDetectQRCode, 500); // Adjust the interval as needed
   });
 
   onDestroy(() => {
@@ -50,7 +50,7 @@
     Quagga.decodeSingle(
       {
         decoder: {
-          readers: ["code_39_reader"],
+          readers: ["code_128_reader"],
         },
         locate: true,
         src: imageData,
@@ -113,7 +113,7 @@
       ></video>
     </div>
     <div class="card p-3 m-5">
-      <h2>Barcode Value: {$barcodeValue}</h2>
+      <h2>Scanned Value: {$barcodeValue}</h2>
     </div>
   </div>
 {/if}
