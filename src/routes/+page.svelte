@@ -1,3 +1,5 @@
+<!-- BARCODE TYPE CODE39 NEEDED, OTHERS WILL NOT ACCEPTED -->
+
 <script>
   import { writable } from "svelte/store";
   import Quagga from "quagga";
