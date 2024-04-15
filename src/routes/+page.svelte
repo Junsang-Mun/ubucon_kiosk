@@ -27,7 +27,7 @@
       });
 
     // Start continuous QR code detection
-    intervalId = setInterval(captureAndDetectQRCode, 500); // Adjust the interval as needed
+    intervalId = setInterval(captureAndDetectQRCode, 200); // Adjust the interval as needed
   });
 
   onDestroy(() => {
