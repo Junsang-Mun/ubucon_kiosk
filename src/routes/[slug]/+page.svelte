@@ -17,7 +17,7 @@
   const sendPrintData = () => {
     const dataToSend = {
       name: data.name,
-      org: data.org,
+      org: data.organization,
     };
     const queryParams = new URLSearchParams(dataToSend).toString();
     window.location.href = `${currentUrl}/print?${queryParams}`;
