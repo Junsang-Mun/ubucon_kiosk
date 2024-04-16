@@ -10,6 +10,7 @@ export async function postDataToDatabase(slug) {
 	const data = {
 		set: {
 			checkedIn: true,
+			checkInTime: new Date().toJSON()
 		}
 	}
 	// Make a PATCH request to the database
