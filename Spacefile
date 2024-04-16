@@ -3,5 +3,6 @@ v: 0
 micros:
   - name: ubucon-kiosk
     src: ./
-    engine: svelte
+    engine: svelte-kit
     primary: true
+    dev: npm run dev
