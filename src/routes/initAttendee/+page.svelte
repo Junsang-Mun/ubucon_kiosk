@@ -1,6 +1,4 @@
 <script>
-  import { insertDataToDatabase } from "$lib/index.js";
-
   let csvData = null;
   let dataArray = null;
   let userDataArray = null;
@@ -50,25 +48,40 @@
 
     userDataArray = dataArray.slice(1).map((data) => {
       // Skipping the header row
-      const [, , , name, email] = data; // Extracting name and email from each row
+      const [, , , name, email, , org, , , , , , , , , , , , , ,] = data;
+      // const [, , , name, email] = data; // Extracting name and email from each row
       return {
-        id: makeid(5),
+        key: makeid(5),
         name,
         email,
+        org,
       };
     });
     console.log(userDataArray);
+    userDataArray.replace(/"/g, "");
   };
 
   const uploadUserDatabase = () => {
     if (!userDataArray) console.error("User data array is not available.");
     userDataArray.forEach((d) => {
-      insertDataToDatabase(d.key, d.email, d.name, "asdf");
+      const { key, name, email, org } = d;
+      const queryString = new URLSearchParams({
+        key,
+        name,
+        email,
+        org,
+      }).toString();
+      fetch(`/initAttendee?${queryString}`, {
+        method: "GET",
+      })
+        .then((response) => response.json())
+        .then((data) => console.log(data))
+        .catch((error) => console.error(error));
     });
   };
 </script>
 
-<div>
+<div class="container p-5 m-5">
   <input type="file" accept=".csv" on:change={handleFileInputChange} />
   <button on:click={convertCSVToArray}>convertCSVToArray</button>
   <button on:click={createUserDataArray}>createUserDataArray</button>
