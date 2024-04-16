@@ -58,7 +58,7 @@
       function (result) {
         if (result && result.codeResult) {
           barcodeValue.set(result.codeResult.code);
-          window.location.href = `http://localhost:5173/${result.codeResult.code}`;
+          window.location.href = `/${result.codeResult.code}`;
         } else {
           barcodeValue.set("No Data Found");
         }

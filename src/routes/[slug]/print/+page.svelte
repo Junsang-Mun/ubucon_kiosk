@@ -8,7 +8,7 @@
   onMount(() => {
     setTimeout(() => {
       window.print();
-      window.location.href = "http://localhost:5173";
+      window.location.href = "/";
     }, delay);
     urlParams = new URLSearchParams(window.location.search);
     name = urlParams.get("name");
