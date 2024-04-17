@@ -8,9 +8,8 @@
   let org;
   let name;
   let checkedIn;
-  const timeOut = 2000;
 
-  const getUser = () => {
+  const getUser = async () => {
     const url = `${window.location.href}`;
     const queryData = {
       userKey: data.slug,
@@ -63,6 +62,7 @@
     org = dbQueryData.organization;
     checkedIn = dbQueryData.checkedIn;
     checkInUser();
+    sendPrintData();
   });
 </script>
 
