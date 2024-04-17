@@ -19,9 +19,7 @@
     if (csvData) {
       const rows = csvData.split("\n");
       dataArray = rows.map((row) => row.split(","));
-      console.log(dataArray);
     } else {
-      console.log(csvData);
       console.log("No CSV data available.");
     }
     return dataArray;
