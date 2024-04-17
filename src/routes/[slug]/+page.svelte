@@ -1,23 +1,34 @@
 <script>
   export let data;
-  import { postDataToDatabase } from "$lib/index.js";
   import { onMount } from "svelte";
 
   let currentUrl;
+  let name;
+  let organization;
   const timeOut = 2000;
 
   onMount(() => {
-    if (!data.name) setTimeout(goToHome, timeOut);
-    postDataToDatabase(data.key);
     currentUrl = window.location.href;
+    const dbQreuyData = {
+      key: data.slug,
+    };
+    fetch(`${currentUrl}/?${new URLSearchParams(dbQreuyData).toString()}`, {
+      method: "GET",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        return data;
+      })
+      .catch((error) => console.error(error));
     if (data.checkedIn === false) setTimeout(sendPrintData, timeOut);
     else if (data.checkedIn === true) setTimeout(goToHome, timeOut);
   });
 
   const sendPrintData = () => {
     const dataToSend = {
-      name: data.name,
-      org: data.organization,
+      name: name,
+      org: organization,
     };
     const queryParams = new URLSearchParams(dataToSend).toString();
     window.location.href = `${currentUrl}/print?${queryParams}`;
@@ -30,7 +41,7 @@
 
 <div class="container p-5 m-5">
   {#if data.org !== undefined || data.name !== undefined}
-    <h1>안녕하세요 {data.org}의 {data.name}님!</h1>
+    <h1>안녕하세요 {organization}의 {name}님!</h1>
   {/if}
   {#if data.checkedIn === true}
     <h1>이미 체크인 되셨습니다.</h1>
