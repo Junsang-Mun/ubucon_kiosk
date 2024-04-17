@@ -77,20 +77,11 @@
   {:else if checkedIn === false}
     <h1>체크인 되셨습니다.</h1>
   {:else}
-    <div class="modal-backdrop show" />
-    <div class="modal" tabindex="-1" role="dialog" style="display:block;">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-body">
-            <p>
-              No such key <strong>{data.key}</strong> found in the database.
-            </p>
-          </div>
-        </div>
-      </div>
+    <div class="spinner-border" role="status">
+      <span class="sr-only"></span>
     </div>
   {/if}
-  <p>{data.key}</p>
+  <p>{data.slug}</p>
 </div>
 
 <style>
