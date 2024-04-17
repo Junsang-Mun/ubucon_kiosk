@@ -61,8 +61,16 @@
     name = dbQueryData.name;
     org = dbQueryData.organization;
     checkedIn = dbQueryData.checkedIn;
-    checkInUser();
-    sendPrintData();
+    if (!checkedIn) {
+      checkInUser();
+      setTimeout(() => {
+        sendPrintData();
+      }, 1000);
+    } else {
+      setTimeout(() => {
+        goToHome();
+      }, 1000);
+    }
   });
 </script>
 
