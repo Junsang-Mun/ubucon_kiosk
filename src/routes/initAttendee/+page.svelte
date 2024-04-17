@@ -58,7 +58,6 @@
       };
     });
     console.log(userDataArray);
-    userDataArray.replace(/"/g, "");
   };
 
   const uploadUserDatabase = () => {

@@ -20,7 +20,6 @@
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         return data;
       })
       .catch((error) => {
@@ -60,7 +59,6 @@
   onMount(async () => {
     currentUrl = window.location.href;
     dbQueryData = await getUser();
-    console.log(dbQueryData);
     name = dbQueryData.name;
     org = dbQueryData.organization;
     checkedIn = dbQueryData.checkedIn;

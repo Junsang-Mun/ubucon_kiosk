@@ -11,11 +11,9 @@
   let intervalId;
   let showModal = false;
 
-  // Create a writable store for barcodeValue
   const barcodeValue = writable("No Data Found");
 
   onMount(() => {
-    // Get access to the webcam
     navigator.mediaDevices
       .getUserMedia({ video: true })
       .then(function (stream) {
@@ -25,13 +23,10 @@
         console.error("Error accessing webcam:", err);
         toggleModal();
       });
-
-    // Start continuous QR code detection
-    intervalId = setInterval(captureAndDetectQRCode, 200); // Adjust the interval as needed
+    intervalId = setInterval(captureAndDetectQRCode, 200);
   });
 
   onDestroy(() => {
-    // Stop continuous detection when component is destroyed
     clearInterval(intervalId);
   });
 
@@ -98,7 +93,7 @@
   <div class="container p-5">
     <div class="navbar navbar-expand-lg mb-5">
       <img
-        src="https://2024.ubuntu-kr.org/_astro/logo.B4ivTObo.svg"
+        src="https://raw.githubusercontent.com/ubuntu-kr/2024.ubuntu-kr.org/main/src/assets/logo.svg"
         alt="UbuCon Korea 2024 Logo"
         style="height:100%; width:100px; object-fit:contain;"
       />
@@ -117,10 +112,3 @@
     </div>
   </div>
 {/if}
-
-<style>
-  /* #preview {
-    width: 640px;
-    height: 360px;
-  } */
-</style>

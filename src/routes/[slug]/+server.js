@@ -3,9 +3,7 @@
  * need to pass the searchParams with the userKey
  */
 export async function GET({ url }) {
-	console.log(url);
 	const key = url.searchParams.get('userKey');
-	console.log(key);
 	const dataKey = import.meta.env.VITE_API_KEY;
 	const projectId = dataKey.split('_')[0];
 	const baseName = 'UCK24-Attendee';
@@ -21,7 +19,6 @@ export async function GET({ url }) {
 	});
 
 	if (!getResponse.ok) {
-		console.log()
 		console.error('Failed to get database data:', getResponse.statusText);
 		return new Response(500);
 	}
