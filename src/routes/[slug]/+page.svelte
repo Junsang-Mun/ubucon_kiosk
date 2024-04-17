@@ -34,8 +34,8 @@
     const queryData = {
       userKey: data.slug,
     };
-    fetch(`${url}/checkin?${new URLSearchParams(queryData).toString()}`, {
-      method: "POST",
+    fetch(`${url}/?${new URLSearchParams(queryData).toString()}`, {
+      method: "PATCH",
     })
       .then((response) => response.json())
       .then((data) => {
@@ -43,15 +43,6 @@
       })
       .catch((error) => console.error(error));
   };
-
-  onMount(async () => {
-    currentUrl = window.location.href;
-    dbQueryData = await getUser();
-    console.log(dbQueryData);
-    name = dbQueryData.name;
-    org = dbQueryData.organization;
-    checkedIn = dbQueryData.checkedIn;
-  });
 
   const sendPrintData = () => {
     const dataToSend = {
@@ -65,6 +56,16 @@
   const goToHome = () => {
     window.location.href = "/";
   };
+
+  onMount(async () => {
+    currentUrl = window.location.href;
+    dbQueryData = await getUser();
+    console.log(dbQueryData);
+    name = dbQueryData.name;
+    org = dbQueryData.organization;
+    checkedIn = dbQueryData.checkedIn;
+    checkInUser();
+  });
 </script>
 
 <div class="container p-5 m-5">
