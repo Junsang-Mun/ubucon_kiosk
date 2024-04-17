@@ -3,16 +3,19 @@
   import { onMount } from "svelte";
 
   let currentUrl;
+  let dbQueryData = {};
+
+  let org;
   let name;
-  let organization;
+  let checkedIn;
   const timeOut = 2000;
 
-  onMount(() => {
-    currentUrl = window.location.href;
-    const dbQreuyData = {
-      key: data.slug,
+  const getUser = () => {
+    const url = `${window.location.href}`;
+    const queryData = {
+      userKey: data.slug,
     };
-    fetch(`${currentUrl}/?${new URLSearchParams(dbQreuyData).toString()}`, {
+    return fetch(`${url}/?${new URLSearchParams(queryData).toString()}`, {
       method: "GET",
     })
       .then((response) => response.json())
@@ -20,15 +23,40 @@
         console.log(data);
         return data;
       })
+      .catch((error) => {
+        console.error(error);
+        return {};
+      });
+  };
+
+  const checkInUser = () => {
+    const url = `${window.location.href}`;
+    const queryData = {
+      userKey: data.slug,
+    };
+    fetch(`${url}/checkin?${new URLSearchParams(queryData).toString()}`, {
+      method: "POST",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      })
       .catch((error) => console.error(error));
-    if (data.checkedIn === false) setTimeout(sendPrintData, timeOut);
-    else if (data.checkedIn === true) setTimeout(goToHome, timeOut);
+  };
+
+  onMount(async () => {
+    currentUrl = window.location.href;
+    dbQueryData = await getUser();
+    console.log(dbQueryData);
+    name = dbQueryData.name;
+    org = dbQueryData.organization;
+    checkedIn = dbQueryData.checkedIn;
   });
 
   const sendPrintData = () => {
     const dataToSend = {
       name: name,
-      org: organization,
+      org: org,
     };
     const queryParams = new URLSearchParams(dataToSend).toString();
     window.location.href = `${currentUrl}/print?${queryParams}`;
@@ -40,12 +68,12 @@
 </script>
 
 <div class="container p-5 m-5">
-  {#if data.org !== undefined || data.name !== undefined}
-    <h1>안녕하세요 {organization}의 {name}님!</h1>
+  {#if org !== undefined || name !== undefined}
+    <h1>안녕하세요 {org}의 {name}님!</h1>
   {/if}
-  {#if data.checkedIn === true}
+  {#if checkedIn === true}
     <h1>이미 체크인 되셨습니다.</h1>
-  {:else if data.checkedIn === false}
+  {:else if checkedIn === false}
     <h1>체크인 되셨습니다.</h1>
   {:else}
     <div class="modal-backdrop show" />
