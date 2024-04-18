@@ -46,13 +46,45 @@
 
     userDataArray = dataArray.slice(1).map((data) => {
       // Skipping the header row
-      const [, , , name, email, , org, , , , , , , , , , , , , ,] = data;
+      const [
+        ,
+        ,
+        ,
+        name,
+        email,
+        ,
+        org,
+        ,
+        ,
+        ,
+        ,
+        ,
+        teeSize,
+        ,
+        ,
+        ,
+        ,
+        ,
+        ,
+        ,
+        ,
+        ,
+        ,
+        ,
+        ,
+        ,
+        ,
+        ,
+        ,
+      ] = data;
+      // const [, , , name, email, , org, , , , , , , , , , , , , ,] = data;
       // const [, , , name, email] = data; // Extracting name and email from each row
       return {
-        key: makeid(5),
+        key: makeid(6),
         name,
         email,
         org,
+        teeSize,
       };
     });
     console.log(userDataArray);
@@ -61,13 +93,15 @@
   const uploadUserDatabase = () => {
     if (!userDataArray) console.error("User data array is not available.");
     userDataArray.forEach((d) => {
-      const { key, name, email, org } = d;
+      const { key, name, email, org, teeSize } = d;
       const queryString = new URLSearchParams({
         key,
         name,
         email,
         org,
+        teeSize,
       }).toString();
+      if (name === undefined && email === undefined) return;
       fetch(`/initAttendee?${queryString}`, {
         method: "GET",
       })
