@@ -1,6 +1,5 @@
 <script>
   import { onMount } from "svelte";
-  import { requestUSBDevice, getDevices } from "$lib/index.js";
 
   let urlParams;
   let name;
@@ -8,16 +7,14 @@
   const delay = 500;
 
   onMount(() => {
-    // setTimeout(() => {
-    //   window.print();
-    //   window.location.href = "/";
-    // }, delay);
-    // requestUSBDevice();
-    // getDevices();
     urlParams = new URLSearchParams(window.location.search);
     name = urlParams.get("name");
     org = urlParams.get("org");
   });
+
+  function doNothing() {
+    console.log("I do nothing");
+  }
 </script>
 
 <h1>{name}</h1>
@@ -25,6 +22,6 @@
 
 <button
   on:click={() => {
-    requestUSBDevice();
+    doNothing();
   }}>Request USB Device</button
 >
