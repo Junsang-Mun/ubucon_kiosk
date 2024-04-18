@@ -48,7 +48,8 @@
       org: org,
     };
     const queryParams = new URLSearchParams(dataToSend).toString();
-    window.location.href = `${currentUrl}/print?${queryParams}`;
+    if (name !== undefined && org !== undefined)
+      window.location.href = `${currentUrl}/print?${queryParams}`;
   };
 
   const goToHome = () => {
@@ -87,7 +88,12 @@
       <span class="sr-only"></span>
     </div>
   {/if}
-  <p>{data.slug}</p>
+  <div class="pt-5">
+    {#if dbQueryData == 500}
+      <button class="btn btn-primary" on:click={goToHome}>홈으로</button>
+    {/if}
+  </div>
+  <p class="pt-5">{data.slug} || {dbQueryData}</p>
 </div>
 
 <style>
