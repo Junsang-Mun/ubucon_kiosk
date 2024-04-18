@@ -1,13 +1,8 @@
 export async function requestUSBDevice() {
-	if (!('usb' in navigator)) {
-		console.log('WebUSB API is not supported!');
-	} else {
-		console.log('WebUSB API is supported!');
-	}
-
 	try {
 		const device = await navigator.usb.requestDevice({ filters: [] });
-		console.log(device);
+		device.open();
+		return device;
 	} catch (e) {
 		console.error(e);
 	}
@@ -19,4 +14,13 @@ export async function getDevices() {
 		console.log(`Name: ${device.productName}, Serial: ${device.serialNumber}`);
 	});
 	return devices;
+}
+
+export async function forgetDevice(device) {
+	try {
+		await device.forget();
+		console.log('Device forgotten successfully!');
+	} catch (e) {
+		console.error('Failed to forget device:', e);
+	}
 }
