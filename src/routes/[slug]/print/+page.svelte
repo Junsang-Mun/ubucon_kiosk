@@ -1,27 +1,38 @@
 <script>
   import { onMount } from "svelte";
+  import { createNametagImagePng, pngToUint8 } from "$lib/img.js";
+  import { buildBitmapPrintTsplCmd } from "$lib/printer.js";
 
   let urlParams;
   let name;
   let org;
-  const delay = 500;
+  let teeShirtSize;
+  let nameTagPng;
 
   onMount(() => {
     urlParams = new URLSearchParams(window.location.search);
     name = urlParams.get("name");
     org = urlParams.get("org");
+    teeShirtSize = urlParams.get("tsize");
+
+    nameTagPng = printNametag();
+    const printUint8Data = pngToUint8(nameTagPng);
+    console.log(nameTagPng);
   });
 
   function doNothing() {
     console.log("I do nothing");
   }
+
+  function printNametag() {
+    const nametagImage = createNametagImagePng(name, org);
+    return nametagImage;
+  }
 </script>
 
-<h1>{name}</h1>
-<h1>{org}</h1>
+<div class="container pt-5">
+  <h1>입장권 출력 중...</h1>
+  <h2>Printing Tickets...</h2>
 
-<button
-  on:click={() => {
-    doNothing();
-  }}>Request USB Device</button
->
+  <img src={nameTagPng} alt="Nametag" />
+</div>
