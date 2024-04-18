@@ -1,36 +1,22 @@
-export async function postDataToDatabase(slug) {
-	const dataKey = import.meta.env.VITE_API_KEY;
-	const projectId = dataKey.split('_')[0];
-	const baseName = 'UCK24-Attendee';
-	const headers = {
-		'X-API-Key': dataKey,
-		'Content-Type': 'application/json',
-	};
-	const url = `https://database.deta.sh/v1/${projectId}/${baseName}/items/${slug}`;
-	const data = {
-		set: {
-			checkedIn: true,
-			checkInTime: new Date().toJSON()
-		}
+export async function requestUSBDevice() {
+	if (!('usb' in navigator)) {
+		console.log('WebUSB API is not supported!');
+	} else {
+		console.log('WebUSB API is supported!');
 	}
-	// Make a PATCH request to the database
-	const postResponse = await fetch(url, {
-		method: 'PATCH',
-		headers,
-		body: JSON.stringify(data)
+
+	try {
+		const device = await navigator.usb.requestDevice({ filters: [] });
+		console.log(device);
+	} catch (e) {
+		console.error(e);
+	}
+}
+
+export async function getDevices() {
+	const devices = await navigator.usb.getDevices();
+	devices.forEach((device) => {
+		console.log(`Name: ${device.productName}, Serial: ${device.serialNumber}`);
 	});
-
-	if (!postResponse.ok) {
-		// Handle error if the PATCH request fails
-		console.error('Failed to post data to the database');
-		return {
-			status: postResponse.status,
-			body: {
-				error: 'Failed to post data to the database'
-			}
-		};
-	}
-
-	// If the PATCH request is successful, return the response
-	return await postResponse.json();
+	return devices;
 }
