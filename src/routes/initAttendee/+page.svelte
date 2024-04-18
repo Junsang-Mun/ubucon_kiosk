@@ -77,8 +77,6 @@
         ,
         ,
       ] = data;
-      // const [, , , name, email, , org, , , , , , , , , , , , , ,] = data;
-      // const [, , , name, email] = data; // Extracting name and email from each row
       return {
         key: makeid(6),
         name,
@@ -90,8 +88,18 @@
     console.log(userDataArray);
   };
 
+  const checkIfKeyIsUnique = () => {
+    const keys = userDataArray.map((data) => data.key);
+    const uniqueKeys = new Set(keys);
+    return keys.length === uniqueKeys.size;
+  };
+
   const uploadUserDatabase = () => {
     if (!userDataArray) console.error("User data array is not available.");
+    if (!checkIfKeyIsUnique()) {
+      console.error("Key is not unique.");
+      return;
+    }
     userDataArray.forEach((d) => {
       const { key, name, email, org, teeSize } = d;
       const queryString = new URLSearchParams({
