@@ -1,11 +1,10 @@
 const textEncoder = new TextEncoder();
 
-export function buildBitmapPrintTsplCmd(x, y, imgWidthPx, imgHeightPx,
-	canvasWidthMm, canvasHeightMm, imageBitmap) {
-	const widthInBytes = Math.ceil(imgWidthPx / 8);
-	const cmddata = textEncoder.encode(`SIZE ${canvasWidthMm} mm,${canvasHeightMm} mm\r\n` +
+export function buildBitmapPrintTsplCmd(x, y, imageBitmap) {
+	const widthInBytes = 20;
+	const cmddata = textEncoder.encode(`SIZE 70 mm,70 mm\r\n` +
 		"CLS\r\n" +
-		`BITMAP ${x},${y},${widthInBytes},${imgHeightPx},1, ` +
+		`BITMAP ${x},${y},20,160,1,` +
 		imageBitmap +
 		"\r\nPRINT 1\r\n" +
 		"END\r\n");

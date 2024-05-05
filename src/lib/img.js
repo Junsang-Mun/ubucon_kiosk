@@ -1,8 +1,8 @@
-export function createNametagImagePng(name, org) {
+export async function createNametagImage(name, org) {
 	const canvas = document.createElement('canvas');
 	const ctx = canvas.getContext('2d');
-	canvas.width = 500;
-	canvas.height = 500;
+	canvas.width = 160;
+	canvas.height = 160;
 	ctx.fillStyle = 'white';
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
 	ctx.fillStyle = 'black';
@@ -11,31 +11,19 @@ export function createNametagImagePng(name, org) {
 	const nameX = canvas.width / 2;
 	const nameY = canvas.height / 2;
 	const orgX = canvas.width / 2;
-	const orgY = canvas.height / 2 + 70;
+	const orgY = canvas.height / 2 + 40;
 
-	ctx.font = '100px Arial';
+	ctx.font = '40px Arial';
 	ctx.fillText(name, nameX, nameY);
-	ctx.font = '35px Arial';
+	ctx.font = '15px Arial';
 	ctx.fillText(org, orgX, orgY);
-
-	const dataUrl = canvas.toDataURL("image/png");
-	return dataUrl;
-}
-
-
-export function pngToUint8(url) {
-	return new Promise((resolve, reject) => {
-		const img = new Image();
-		img.onload = () => {
-			const canvas = document.createElement('canvas');
-			const ctx = canvas.getContext('2d');
-			canvas.width = img.width;
-			canvas.height = img.height;
-			ctx.drawImage(img, 0, 0);
-			const imgData = ctx.getImageData(0, 0, img.width, img.height);
-			const data = new Uint8Array(imgData.data);
-			resolve(data);
-		};
-		img.src = url;
-	});
+	const dataURL = canvas.toDataURL('image/png');
+	return dataURL;
+	// const binaryString = atob(dataURL.split(',')[1]);
+	// const length = binaryString.length;
+	// const uint8Array = new Uint8Array(length);
+	// for (let i = 0; i < length; i++) {
+	// 	uint8Array[i] = binaryString.charCodeAt(i);
+	// }
+	// return uint8Array;
 }
