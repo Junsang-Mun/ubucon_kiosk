@@ -15,7 +15,7 @@ export function buildBitmapPrintTsplCmd(x, y, imgWidthPx, imgHeightPx,
 export function buildTestPrintTsplCmd(canvasWidthMm, canvasHeightMm, text) {
 	const cmddata = textEncoder.encode(`SIZE ${canvasWidthMm} mm,${canvasHeightMm} mm\r\n` +
 		"CLS\r\n" +
-		`TEXT 10,10,\"3\",0,1,1,\"${text}\"\r\n` +
+		`TEXT 10,50,\"3\",0,1,1,\"${text}\"\r\n` +
 		"PRINT 1\r\n" +
 		"END\r\n");
 	return cmddata;

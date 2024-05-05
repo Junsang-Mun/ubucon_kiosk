@@ -2,6 +2,8 @@ export async function requestUSBDevice() {
 	try {
 		const device = await navigator.usb.requestDevice({ filters: [] });
 		device.open();
+		const deviceString = JSON.stringify(device);
+		localStorage.setItem('usbDevice', deviceString);
 		return device;
 	} catch (e) {
 		console.error(e);

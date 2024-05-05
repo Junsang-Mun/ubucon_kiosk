@@ -14,7 +14,7 @@
   });
 
   const printTestPage = async () => {
-    const data = buildTestPrintTsplCmd();
+    const data = buildTestPrintTsplCmd(70, 70, "Hello World?");
     console.log(data);
     await sendDataToPrinter(usbDevice, data);
   };

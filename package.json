@@ -17,6 +17,8 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"buffer": "^6.0.3",
+		"jimp": "^0.22.12",
 		"quagga": "^0.12.1"
 	}
 }
