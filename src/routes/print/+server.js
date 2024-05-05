@@ -1,4 +1,4 @@
-import { usb, findByIds } from 'usb';
+import { findByIds } from 'usb';
 import { Buffer } from 'buffer';
 import Jimp from "jimp";
 
@@ -65,12 +65,9 @@ export async function POST(event) {
 			]);
 			print(buffer);
 		});
+		return new Response({ status: 200 });
 	} catch (error) {
 		console.error(error);
 		return new Response('Failed to print', { status: 500 });
 	}
-	return new Response({
-		status: 200,
-		buffer: buffer
-	});
 }

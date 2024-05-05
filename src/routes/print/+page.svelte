@@ -7,6 +7,7 @@
   let name, org, tee;
   let nameTagImg;
   let cmd, tsplBitmap;
+  let bufferData; // Variable to store buffer data
 
   onMount(async () => {
     const url = $page.url;
@@ -25,9 +26,20 @@
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ data: nameTagImg }),
-    }).then((res) => {
-      console.log(res);
-    });
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        console.log(response);
+        return response.json();
+      })
+      .then((data) => {
+        bufferData = data.buffer; // Store buffer data in a variable
+        console.log(bufferData); // Log the buffer data
+        // Use the buffer data as needed
+      })
+      .catch((error) => console.error(error)); // Handle any errors
   }
 </script>
 
