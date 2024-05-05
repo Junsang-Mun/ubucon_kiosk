@@ -16,24 +16,7 @@
 
     nameTagImg = await createNametagImage(name, org, tee);
     console.log(nameTagImg);
-    //(x, y, imgWidthPx, imgHeightPx, canvasWidthMm, canvasHeightMm, imageBitmap)//
-    // cmd = buildBitmapPrintTsplCmd(testImg);
-    // console.log(cmd);
   });
-
-  //   async function printTicket() {
-  //     const filters = [{ vendorId: 0x1fc9, productId: 0x2016 }];
-  //     try {
-  //       let device = await navigator.usb.requestDevice({ filters: filters });
-  //       if (device === null) {
-  //         console.log("Device not found");
-  //         return;
-  //       }
-  //       sendDataToPrinter(device, cmd);
-  //     } catch (error) {
-  //       console.error("Error while getting USB device:", error);
-  //     }
-  //   }
 
   async function printTicket() {
     fetch("", {
@@ -42,6 +25,8 @@
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ data: nameTagImg }),
+    }).then((res) => {
+      console.log(res);
     });
   }
 </script>

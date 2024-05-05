@@ -50,11 +50,12 @@ function print(buffer) {
 export async function POST(event) {
 	const body = await event.request.json();
 	let pngData = body.data;
+	let buffer;
 	try {
 		getImageData(pngData, (data) => {
 			const imgWidthInBytes = data[0].length;
 			const imgHeightInDots = data.length;
-			const buffer = Buffer.concat([
+			buffer = Buffer.concat([
 				Buffer.from('SIZE 70 mm,70 mm\r\n'),
 				Buffer.from('CLS\r\n'),
 				Buffer.from(`BITMAP 0,0,${imgWidthInBytes},${imgHeightInDots},0,`),
@@ -68,5 +69,8 @@ export async function POST(event) {
 		console.error(error);
 		return new Response('Failed to print', { status: 500 });
 	}
-	return new Response('200');
+	return new Response({
+		status: 200,
+		buffer: buffer
+	});
 }
