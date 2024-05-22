@@ -17,6 +17,5 @@ export async function GET({ url }) {
 	console.log(response);
 	return new Response({
 		'key': key,
-		'name': response
 	}, 200)
 }
