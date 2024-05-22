@@ -3,6 +3,7 @@ export async function GET({ url }) {
 	const mail = url.searchParams.get('email');
 	const name = url.searchParams.get('name');
 	const org = url.searchParams.get('org');
+	const tee = url.searchParams.get('teeSize');
 
 	const dataKey = import.meta.env.VITE_API_KEY;
 	const projectId = dataKey.split('_')[0];
@@ -17,6 +18,7 @@ export async function GET({ url }) {
 			key,
 			mail,
 			name,
+			teeSize: tee,
 			organization: org,
 			checkedIn: false,
 			checkInTime: null

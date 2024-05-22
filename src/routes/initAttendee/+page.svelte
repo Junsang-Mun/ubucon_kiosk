@@ -18,11 +18,32 @@
   const convertCSVToArray = () => {
     if (csvData) {
       const rows = csvData.split("\n");
-      dataArray = rows.map((row) => row.split(","));
+      dataArray = rows.map((row) => parseCSVRow(row));
     } else {
       console.log("No CSV data available.");
     }
+    console.log(dataArray);
     return dataArray;
+  };
+
+  const parseCSVRow = (row) => {
+    const result = [];
+    let current = "";
+    let inQuotes = false;
+    for (let char of row) {
+      if (char === '"' && inQuotes) {
+        inQuotes = false;
+      } else if (char === '"' && !inQuotes) {
+        inQuotes = true;
+      } else if (char === "," && !inQuotes) {
+        result.push(current.trim());
+        current = "";
+      } else {
+        current += char;
+      }
+    }
+    result.push(current.trim());
+    return result;
   };
 
   const makeid = (length) => {

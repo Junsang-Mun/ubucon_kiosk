@@ -1,6 +1,11 @@
 export async function GET({ url }) {
 	const key = url.searchParams.get('key');
 
+	// Ensure the key is present
+	if (!key) {
+		return new Response('Key is required', { status: 400 });
+	}
+
 	const dataKey = import.meta.env.VITE_API_KEY;
 	const projectId = dataKey.split('_')[0];
 	const baseName = 'UCK24-Attendee';
@@ -9,14 +14,22 @@ export async function GET({ url }) {
 		'X-API-Key': dataKey,
 		'Content-Type': 'application/json',
 	};
-	const response = await fetch(dbUrl, {
-		method: 'GET',
-		headers,
-	});
 
-	console.log(response);
-	return new Response({
-		'key': key,
-		'name': response
-	}, 200)
+	try {
+		const response = await fetch(dbUrl, {
+			method: 'GET',
+			headers,
+		});
+
+		// Check if the response is successful
+		if (!response.ok) {
+			return new Response(`Failed to fetch data: ${response.statusText}`, { status: response.status });
+		}
+
+		const data = await response.json();
+		return new Response(JSON.stringify(data), { status: 200, headers: { 'Content-Type': 'application/json' } });
+	} catch (error) {
+		console.error(error);
+		return new Response('Internal Server Error', { status: 500 });
+	}
 }
