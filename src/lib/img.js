@@ -1,4 +1,4 @@
-export async function createNametagImage(name, org) {
+export async function createNametagImage(name, org, tee) {
 	const canvas = document.createElement('canvas');
 	const ctx = canvas.getContext('2d');
 	canvas.width = 600;
@@ -12,11 +12,15 @@ export async function createNametagImage(name, org) {
 	const nameY = canvas.height / 2;
 	const orgX = canvas.width / 2;
 	const orgY = canvas.height / 2 + 120;
+	const teeX = canvas.width / 4;
+	const teeY = canvas.height / 2 - 200;
 
 	ctx.font = '140px Arial';
 	ctx.fillText(name, nameX, nameY);
 	ctx.font = '40px Arial';
 	ctx.fillText(org, orgX, orgY);
+	ctx.font = '20px Arial';
+	ctx.fillText(tee, teeX, teeY);
 	const dataURL = canvas.toDataURL('image/png');
 	return dataURL;
 }
