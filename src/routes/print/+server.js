@@ -39,7 +39,7 @@ function getImageData(base64, cb) {
 			}
 			cb(data);
 		}).catch(err => {
-			console.error("Error reading image:", err);
+			console.error("Error:", err);
 			return new Response('Failed to process image', { status: 500 });
 		});
 		try {

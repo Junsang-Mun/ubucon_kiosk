@@ -12,8 +12,8 @@ export async function createNametagImage(name, org, tee) {
 	const nameY = canvas.height / 2;
 	const orgX = canvas.width / 2;
 	const orgY = canvas.height / 2 + 120;
-	const teeX = canvas.width / 4;
-	const teeY = canvas.height / 2 - 200;
+	const teeX = canvas.width / 2;
+	const teeY = canvas.height / 2 + 200;
 
 	ctx.font = '140px Arial';
 	ctx.fillText(name, nameX, nameY);

@@ -1,13 +1,11 @@
 <script>
   import { onMount } from "svelte";
   import { createNametagImage } from "$lib/img.js";
-  import { buildBitmapPrintTsplCmd, sendDataToPrinter } from "$lib/printer.js";
   import { page } from "$app/stores";
 
   let name, org, tee;
   let nameTagImg;
-  let cmd, tsplBitmap;
-  let bufferData; // Variable to store buffer data
+  let bufferData;
 
   onMount(async () => {
     const url = $page.url;
@@ -17,6 +15,10 @@
 
     nameTagImg = await createNametagImage(name, org, tee);
     console.log(nameTagImg);
+    printTicket();
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 5000);
   });
 
   async function printTicket() {
@@ -37,7 +39,6 @@
       .then((data) => {
         bufferData = data.buffer; // Store buffer data in a variable
         console.log(bufferData); // Log the buffer data
-        // Use the buffer data as needed
       })
       .catch((error) => console.error(error)); // Handle any errors
   }
@@ -45,13 +46,5 @@
 
 <div class="container p-5">
   <h1>입장권 출력 페이지</h1>
-  <div class="container p-5">
-    <p>{name}</p>
-    <p>{org}</p>
-    <p>{tee}</p>
-  </div>
-  <div class="flex justify-center">
-    <button class="btn btn-primary" on:click={printTicket}>프린터로 출력</button
-    >
-  </div>
+  <img src={nameTagImg} alt="nametag" />
 </div>

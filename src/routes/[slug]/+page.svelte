@@ -20,4 +20,6 @@
   });
 </script>
 
-<h1>Slug: {slug}</h1>
+<div class="p-5">
+  <h1>잠시만 기다려 주세요...</h1>
+</div>
