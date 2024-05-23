@@ -14,7 +14,7 @@
       .then((data) => {
         console.log(data);
         //http://localhost:5173/print?name=문준상&org=우분투한국커뮤니티&tee=M
-        window.location.href = `print/?name=${data.name}&org=${data.organization}&tee=${data.teeSize}`;
+        // window.location.href = `print/?name=${data.name}&org=${data.organization}&tee=${data.teeSize}`;
       })
       .catch((e) => console.error(e));
   });

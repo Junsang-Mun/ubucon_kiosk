@@ -1,3 +1,29 @@
+async function checkIn(key) {
+	const dataKey = import.meta.env.VITE_API_KEY;
+	const projectId = dataKey.split("_")[0];
+	const baseName = "UCK24-Attendee";
+	const dbUrl = `https://database.deta.sh/v1/${projectId}/${baseName}/items/${key}`;
+	const headers = {
+		"X-API-Key": dataKey,
+		"Content-Type": "application/json",
+	};
+	const body = {
+		// "key": key,
+		"set": {
+			"checkInTime": new Date().toLocaleString("ko-kr"),
+			"checkedIn": true
+		}
+	}
+	const response = await fetch(dbUrl, {
+		method: "PATCH",
+		headers: headers,
+		body: JSON.stringify(body)
+	});
+	if (!response.ok)
+		return false;
+	return true;
+}
+
 export async function GET({ url }) {
 	const key = url.searchParams.get('key');
 
@@ -14,6 +40,9 @@ export async function GET({ url }) {
 		'X-API-Key': dataKey,
 		'Content-Type': 'application/json',
 	};
+
+	if (checkIn(key) === false)
+		return new Response('Failed to check in');
 
 	try {
 		const response = await fetch(dbUrl, {
