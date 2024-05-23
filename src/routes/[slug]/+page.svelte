@@ -11,19 +11,18 @@
     fetch(`./?key=${slug}`, {
       method: "GET",
     })
-      .then((response) => {
-        response.json();
-        if (response.status === 501) {
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        if (data.checkedIn === true) {
           checkedIn = true;
           setTimeout(() => {
             window.location.href = "/";
           }, 2000);
+        } else {
+          //http://localhost:5173/print?name=문준상&org=우분투한국커뮤니티&tee=M
+          window.location.href = `print/?name=${data.name}&org=${data.organization}&tee=${data.teeSize}`;
         }
-      })
-      .then((data) => {
-        console.log(data);
-        //http://localhost:5173/print?name=문준상&org=우분투한국커뮤니티&tee=M
-        window.location.href = `print/?name=${data.name}&org=${data.organization}&tee=${data.teeSize}`;
       })
       .catch((e) => console.error(e));
   });

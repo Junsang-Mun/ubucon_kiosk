@@ -53,9 +53,6 @@ export async function GET({ url }) {
 		}
 
 		const data = await response.json();
-		if (data.checkedIn === true) {
-			return new Response('User already checked in', { status: 501 })
-		}
 
 		if (checkIn(key) === false) {
 			return new Response('Failed to check in');
