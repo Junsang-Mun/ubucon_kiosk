@@ -41,9 +41,6 @@ export async function GET({ url }) {
 		'Content-Type': 'application/json',
 	};
 
-	if (checkIn(key) === false)
-		return new Response('Failed to check in');
-
 	try {
 		const response = await fetch(dbUrl, {
 			method: 'GET',
@@ -56,6 +53,14 @@ export async function GET({ url }) {
 		}
 
 		const data = await response.json();
+		if (data.checkedIn === true) {
+			return new Response('User already checked in', { status: 501 })
+		}
+
+		if (checkIn(key) === false) {
+			return new Response('Failed to check in');
+		}
+
 		return new Response(JSON.stringify(data), { status: 200, headers: { 'Content-Type': 'application/json' } });
 	} catch (error) {
 		console.error(error);
